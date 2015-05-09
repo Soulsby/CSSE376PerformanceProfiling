@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import state.StateManager;
@@ -77,12 +78,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			if (!this.isRunning) {
 				break;
 			}
+			long startTime = System.nanoTime();
 
 			// Run the basics.
 			update();
 			render();
 			draw();
-
+			long endTime = System.nanoTime();
+			long fps = 1000000000L/(endTime- startTime);
+			((JFrame)this.getParent().getParent().getParent()).setTitle("Digger  FPS:"+fps);
+			//System.err.println(fps);
+			
 			try {
 				Thread.sleep(this.targetTime);
 			} catch (Exception e) {
